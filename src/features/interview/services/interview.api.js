@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-origin: "https://classy-maamoul-5ee46a.netlify.app",
+baseURL: "https://job-preparation-web-application.onrender.com/api",
   withCredentials: true,
 });
 
