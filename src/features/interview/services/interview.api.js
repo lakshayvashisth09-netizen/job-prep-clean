@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-baseURL: "https://job-preparation-web-application.onrender.com",
+baseURL: "https://job-preparation-web-application.onrender.com/api",
   withCredentials: true,
 });
 
