@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-baseURL: "https://job-preparation-web-application.onrender.com/api",
+  baseURL: "https://job-preparation-web-application.onrender.com/api",
   withCredentials: true,
 });
 
@@ -14,20 +14,14 @@ export const generateInterviewReport = async ({
   resumeFile,
 }) => {
   try {
-    console.log("📦 FILE SENDING:", resumeFile);
-
-    if (!resumeFile) {
-      throw new Error("Resume file missing ❌");
-    }
-
     const formData = new FormData();
     formData.append("jobDescription", jobDescription || "");
     formData.append("selfDescription", selfDescription || "");
     formData.append("resume", resumeFile);
 
-    const response = await api.post("/api/interview", formData);
+    // FIX: Yahan se "/api" hata diya, sirf "/interview" rakha
+    const response = await api.post("/interview", formData); 
     return response.data;
-
   } catch (error) {
     console.error("❌ INTERVIEW API ERROR:", error);
     throw error;
@@ -39,7 +33,8 @@ export const generateInterviewReport = async ({
  */
 export const getInterviewReportById = async (interviewId) => {
   try {
-    const response = await api.get(`/api/interview/report/${interviewId}`);
+    // FIX: Yahan bhi sirf "/interview/report/..."
+    const response = await api.get(`/interview/report/${interviewId}`);
     return response.data;
   } catch (error) {
     console.error("❌ GET REPORT ERROR:", error);
@@ -52,7 +47,8 @@ export const getInterviewReportById = async (interviewId) => {
  */
 export const getAllInterviewReports = async () => {
   try {
-    const response = await api.get("/api/interview");
+    // FIX: Sirf "/interview"
+    const response = await api.get("/interview");
     return response.data;
   } catch (error) {
     console.error("❌ GET ALL ERROR:", error);
@@ -65,14 +61,12 @@ export const getAllInterviewReports = async () => {
  */
 export const generateResumePdf = async ({ interviewReportId }) => {
   try {
+    // FIX: Sirf "/interview/resume/..."
     const response = await api.post(
-      `/api/interview/resume/pdf/${interviewReportId}`,
+      `/interview/resume/pdf/${interviewReportId}`,
       null,
-      {
-        responseType: "blob",
-      }
+      { responseType: "blob" }
     );
-
     return response.data;
   } catch (error) {
     console.error("❌ PDF ERROR:", error);
